@@ -1,4 +1,4 @@
-FROM peterevans/xenial-gcloud:1.2.23
+FROM us.gcr.io/blyncsy/xenial-gcloud:1.2.23
 
 LABEL \
   maintainer="Peter Evans <mail@peterevans.dev>" \
