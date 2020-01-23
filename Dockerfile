@@ -56,6 +56,8 @@ RUN mkdir /osrm-src \
  && cp -r /osrm-src/osrm-backend-$OSRM_VERSION/profiles/* /osrm-profiles \
  && rm -rf /osrm-src
 
+COPY car.lua /osrm-profiles
+
 # Set the entrypoint
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh

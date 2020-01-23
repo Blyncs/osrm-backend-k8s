@@ -5,6 +5,11 @@ if [ "$OSRM_MODE" != "CREATE" ] && [ "$OSRM_MODE" != "RESTORE" ]; then
     OSRM_MODE="CREATE"
 fi
 
+if [ "$FILE_MODE" != "OVERWRITE" ] && [ "$FILE_MODE" != "KEEP" ]; then
+    # Default to CREATE
+    FILE_MODE="KEEP"
+fi
+
 # Defaults
 OSRM_DATA_PATH=${OSRM_DATA_PATH:="/osrm-data"}
 OSRM_DATA_LABEL=${OSRM_DATA_LABEL:="data"}
@@ -21,6 +26,10 @@ _sig() {
 }
 trap _sig SIGKILL SIGTERM SIGHUP SIGINT EXIT
 
+CP_FLAG=""
+if [ "$FILE_MODE" == "KEEP" ]; then
+    CP_FLAG="-n"
+fi
 
 if [ "$OSRM_MODE" == "CREATE" ]; then
     
@@ -49,7 +58,7 @@ else
         gcloud config set project $OSRM_PROJECT_ID
 
         # Copy the graph from storage
-        gsutil -m cp $OSRM_GS_BUCKET/$OSRM_DATA_LABEL/*.osrm* $OSRM_DATA_PATH
+        gsutil -m cp $CP_FLAG $OSRM_GS_BUCKET/$OSRM_DATA_LABEL/*.osrm* $OSRM_DATA_PATH
 
     fi
     
