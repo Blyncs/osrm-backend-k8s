@@ -26,6 +26,8 @@ _sig() {
 }
 trap _sig SIGKILL SIGTERM SIGHUP SIGINT EXIT
 
+mkdir -p $OSRM_DATA_PATH
+
 CP_FLAG=""
 if [ "$FILE_MODE" == "KEEP" ]; then
     CP_FLAG="-n"
